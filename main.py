@@ -41,7 +41,7 @@ class PublicKeyServer(paramiko.ServerInterface):
                 self.event = threading.Event()
 
         def get_allowed_auths(self, username):
-                return "password,publickey"
+                return "publickey, password"
 
         def check_channel_request(self, kind, chanid):
                 if kind == 'session':
