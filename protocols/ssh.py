@@ -1,5 +1,14 @@
+#import logging
+import socket
 import paramiko
 from paramiko.py3compat import b, u, decodebytes
+import sys
+import time
+import threading
+
+t0 = time.time()
+HOST_KEY = paramiko.RSAKey(filename='/root/.ssh/id_rsa')
+paramiko.util.log_to_file("paramiko-log.log", level = "DEBUG")
 
 class PasswordServer(paramiko.ServerInterface):
         def __init__(self):
@@ -12,7 +21,7 @@ class PasswordServer(paramiko.ServerInterface):
                 return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
 
         def check_auth_password(self, username, password):
-                uplist_logger.info(f'PasswordAuth:{username}\t{password}\n')
+                #elogger.uplist_logger.info(f'PasswordAuth:{username}\t{password}\n')
 
                 return paramiko.AUTH_FAILED
 
@@ -37,8 +46,8 @@ class PublicKeyServer(paramiko.ServerInterface):
 
 class PasswordThreadedServer():
         def __init__(self):
-                self.host = '192.168.56.104'
-                self.port = 22
+                self.host = 'localhost'
+                self.port = 22000
                 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 self.sock.bind((self.host, self.port))
@@ -52,7 +61,8 @@ class PasswordThreadedServer():
                         sys.exit()
                     threading.Thread(target = self.listenToClient,args = (clientsocket,address)).start()
 
-                    iplist_logger.info(f'{str(address[0])}\t{str(address[1])}\n')
+                    #elogger.iplist_logger.info(f'{str(address[0])}\t{str(address[1])}\n')
+                    print('{str(address[0])}\t{str(address[1])}\n')
 
         def listenToClient(self, clientsocket, address):
                 size = 1024
