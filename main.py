@@ -7,20 +7,7 @@ import threading
 import time
 import protocols.ssh as essh
 import protocols.http as ehttp
-
-def setup_logger(name, log_file, level=logging.INFO):
-    """To setup the loggers"""
-
-    file_handler = logging.FileHandler(log_file)
-    formatter = logging.Formatter('%(asctime)s : %(levelname)s : %(name)s : %(message)s')
-    file_handler.setFormatter(formatter)
-
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    logger.addHandler(file_handler)
-
-    return logger
-
+import logging.logger as elogger
 
 
 if __name__ == '__main__':
@@ -34,8 +21,8 @@ if __name__ == '__main__':
 
         if args.ssh:
             print("Running SSH Honeypot...")
-            uplist_logger = setup_logger('first_logger', 'uplist.log')
-            iplist_logger = setup_logger('second_logger', 'iplist.log')
+            uplist_logger = setup_logger('ssh-honeypot-usernames-passwords', 'ssh-usernames-passwords.log')
+            iplist_logger = setup_logger('ssh-honeypot-ip-address', 'ssh-ip-addresses.log')
 
             HOST_KEY = essh.paramiko.RSAKey(filename='/root/.ssh/id_rsa')
             t0 = time.time()
