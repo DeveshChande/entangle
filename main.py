@@ -2,12 +2,10 @@ import argparse
 from binascii import hexlify
 import socket
 import paramiko
-import sys
 import threading
-import time
 import protocols.ssh as essh
 import protocols.http as ehttp
-import log.elogger as elogger
+
 
 
 if __name__ == '__main__':
@@ -21,8 +19,7 @@ if __name__ == '__main__':
 
         if args.ssh:
             print("Running SSH Honeypot...")
-            uplist_logger = elogger.setup_logger('ssh-honeypot-usernames-passwords', 'ssh-usernames-passwords.log')
-            iplist_logger = elogger.setup_logger('ssh-honeypot-ip-address', 'ssh-ip-addresses.log')
+
 
             if args.password:
                 essh.PasswordThreadedServer().listen()

@@ -1,4 +1,4 @@
-#import logging
+import logging
 import socket
 import paramiko
 from paramiko.py3compat import b, u, decodebytes
@@ -6,9 +6,24 @@ import sys
 import time
 import threading
 
+def setup_logger(name, log_file, level=logging.INFO):
+    """To setup the loggers"""
+
+    file_handler = logging.FileHandler(log_file)
+    formatter = logging.Formatter('%(asctime)s : %(levelname)s : %(name)s : %(message)s')
+    file_handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(file_handler)
+
+    return logger
+
 t0 = time.time()
 HOST_KEY = paramiko.RSAKey(filename='/root/.ssh/id_rsa')
 paramiko.util.log_to_file("paramiko-log.log", level = "DEBUG")
+uplist_logger = setup_logger('ssh-honeypot-usernames-passwords', 'ssh-usernames-passwords.log')
+iplist_logger = setup_logger('ssh-honeypot-ip-address', 'ssh-ip-addresses.log')
 
 class PasswordServer(paramiko.ServerInterface):
         def __init__(self):
@@ -21,7 +36,7 @@ class PasswordServer(paramiko.ServerInterface):
                 return paramiko.OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
 
         def check_auth_password(self, username, password):
-                #elogger.uplist_logger.info(f'PasswordAuth:{username}\t{password}\n')
+                uplist_logger.info(f'PasswordAuth:{username}\t{password}\n')
 
                 return paramiko.AUTH_FAILED
 
@@ -61,8 +76,7 @@ class PasswordThreadedServer():
                         sys.exit()
                     threading.Thread(target = self.listenToClient,args = (clientsocket,address)).start()
 
-                    #elogger.iplist_logger.info(f'{str(address[0])}\t{str(address[1])}\n')
-                    print('{str(address[0])}\t{str(address[1])}\n')
+                    iplist_logger.info(f'{str(address[0])}\t{str(address[1])}\n')
 
         def listenToClient(self, clientsocket, address):
                 size = 1024
