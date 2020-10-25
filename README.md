@@ -1,5 +1,5 @@
 # SSHHoneypot
-A simple ssh honeypot written in Python.
+A minimal setup honeypot tool that supports multiple protocols, written in Python3.
 
 # Installation
 
