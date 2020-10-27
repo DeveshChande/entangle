@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Login</title>
+	<link href="https://fonts.googleapis.com/css?family=Alegreya&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'animate.css' %}">
+	<script type="text/javascript" src="{% static 'wow.min.js' %}"></script>
+	<style type="text/css">
+	body,
+	html {
+		width: 100%;
+		/*background-image: linear-gradient(to bottom, #ffec6f, #ffd552, #ffbd36, #ffa41d, #ff8903);*/
+		/*background-image: linear-gradient(to top, #7ebcff, #6ab1ff, #56a5ff, #419aff, #278efe);*/
+		background-color: #FAF9F6;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+	}
+
+	.card.home {
+
+		margin-left: 15%;
+	}
+
+	.scrollbar.edit {
+		margin-top: 10px;
+		margin-right: 10px;
+		float: right;
+		height: 700px;
+		width: 99%;
+		/*background-color: #000;*/
+		overflow-y: scroll;
+		margin-bottom: 25px;
+	}
+
+	.scrollbar {
+		margin-top: 10px;
+		margin-right: 10px;
+		float: right;
+		height: 900px;
+		width: 99%;
+		/*background-color: #000;*/
+		overflow-y: scroll;
+		margin-bottom: 25px;
+	}
+
+	.force-overflow {
+		/*min-height: 450px;*/
+	}
+
+	#scroller {
+		text-align: left;
+		width: 100%;
+		color: #000;
+		margin: auto;
+	}
+
+	#style-7::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+		background-color: #F5F5F5;
+		border-radius: 10px;
+	}
+
+	#style-7::-webkit-scrollbar {
+		width: 10px;
+		background-color: #F5F5F5;
+	}
+
+	#style-7::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		background-image: -webkit-gradient(linear,
+			left bottom,
+			left top,
+			color-stop(0.44, rgb(122, 153, 217)),
+			color-stop(0.72, rgb(73, 125, 189)),
+			color-stop(0.86, rgb(28, 58, 148)));
+	}
+
+
+	#sidebar {
+		width: 250px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100vh;
+		z-index: 999;
+		background: #7EBCFF;
+		color: #fff;
+		transition: all 0.3s;
+	}
+
+	a[data-toggle="collapse"] {
+		position: relative;
+	}
+
+	.dropdown-toggle::after {
+		display: block;
+		position: absolute;
+		top: 50%;
+		right: 20px;
+		transform: translateY(-50%);
+	}
+
+	.wrapper {
+		display: flex;
+		align-items: stretch;
+	}
+
+	#sidebar {
+		/*
+		min-width: 250px;
+		max-width: 250px;*/
+	}
+
+	#sidebar.active {
+		margin-left: -250px;
+	}
+
+	#sidebar {
+		/*
+		min-width: 250px;
+		max-width: 250px;
+		min-height: 100vh;*/
+		width: 15%;
+		height: 100%;
+	}
+
+	p {
+		font-family: 'Poppins', sans-serif;
+		font-size: 1.1em;
+		font-weight: 300;
+		line-height: 1.7em;
+		color: #fff;
+	}
+
+	a,
+	a:hover,
+	a:focus {
+		color: inherit;
+		text-decoration: none;
+		transition: all 0.3s;
+	}
+
+	#sidebar {
+		background: #7EBCFF;
+		color: #fff;
+		transition: all 0.3s;
+	}
+
+	#sidebar .sidebar-header {
+		padding: 20px;
+		background: #278EFE;
+	}
+
+	/*#sidebar ul.components {
+		padding: 20px 0;
+		border-bottom: 1px solid #278EFE;
+	}*/
+
+	#sidebar ul p {
+		color: #fff;
+		padding: 10px;
+	}
+
+	#sidebar ul li a {
+		padding: 10px;
+		font-size: 1.1em;
+		display: block;
+	}
+
+	#sidebar ul li a:hover {
+		color: #7386D5;
+		background: #fff;
+	}
+
+	#sidebar ul li.active>a,
+	a[aria-expanded="true"] {
+		color: #fff;
+		background: #278EFE;
+	}
+
+	ul ul a {
+		font-size: 0.9em !important;
+		padding-left: 30px !important;
+		background: #278EFE;
+	}
+
+	.card.student {
+		top: 0;
+		width: 100%;
+		border-radius: 25px;
+		z-index: 999;
+		background-color: #F3F9FF;
+	}
+
+	.circular {
+		/*float: left;*/
+		display: block;
+		margin: 1em auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-border-radius: 99em;
+		-moz-border-radius: 99em;
+		border-radius: 99em;
+		border: 5px solid #eee;
+		box-shadow: 0 5px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	img {}
+
+	.card-title.student {
+
+		margin-top: 9%;
+		color: #000;
+
+	}
+
+	/*.card-text.student {
+		margin-top: auto;
+	}*/
+
+	.circle {
+		/*float: left;*/
+		display: block;
+		margin: 1em auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-border-radius: 99em;
+		-moz-border-radius: 99em;
+		border-radius: 99em;
+		/*border: 5px solid #eee;*/
+		box-shadow: 0 5px 4px rgba(0, 0, 0, 0.3);
+		object-fit: cover;
+	}
+
+	.hori {
+
+		margin-top: 24px;
+	}
+
+	.name {
+
+		margin-top: 20px;
+		margin-left: 80px;
+		font-size: 18px;
+	}
+
+	.date {
+
+		margin-top: 4px;
+		margin-left: 80px;
+		font-size: 12px;
+	}
+
+	.vote {
+
+		float: left;
+	}
+
+	.more {
+
+		float: right;
+	}
+
+	.card-body.student {}
+
+	.card.complaint {
+		/*position: relative;*/
+		margin-top: 4%;
+		border-radius: 35px;
+		margin-left: 16%;
+
+		box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.2);
+		/*flex: 1;*/
+		transition: all 0.2s ease;
+		/*max-width: 600px;
+		max-height: 450px;
+		min-width: 600px;
+		min-height: 450px;*/
+	}
+
+	.card.complaint:hover {
+
+		box-shadow: 4px 8px 12px 0 rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+		transform: translatey(-4px);
+	}
+
+	.hor {
+
+		margin-top: 130px;
+	}
+
+	/*.describe {
+		position: fi;
+		margin-top: 25%;
+	}
+*/
+
+
+	.avatar {
+		display: block;
+		margin: 0.4em auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-border-radius: 99em;
+		-moz-border-radius: 99em;
+		border-radius: 99em;
+		border: 3px solid #eee;
+		box-shadow: 0 5px 4px rgba(0, 0, 0, 0.3);
+		object-fit: cover;
+	}
+
+	.card.edit {
+<!--		position: absolute;-->
+		top: 0;
+
+		margin-top: 2.5%;
+		width: 85%;
+		height: 90%;
+		margin-left: 7%;
+		margin-right: 1%;
+		border-radius: 25px;
+		background-color: #FAF9F6;
+		overflow: hidden;
+		-webkit-box-shadow: 17px 20px 79px -10px rgba(56, 56, 56, 0.7);
+		-moz-box-shadow: 17px 20px 79px -10px rgba(56, 56, 56, 0.7);
+		box-shadow: 17px 20px 79px -10px rgba(56, 56, 56, 0.7);
+	}
+
+
+
+	.circular {
+		/*float: left;*/
+		display: block;
+		margin: 1em auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center center;
+		-webkit-border-radius: 99em;
+		-moz-border-radius: 99em;
+		border-radius: 99em;
+		border: 5px solid #eee;
+		box-shadow: 0 5px 4px rgba(0, 0, 0, 0.3);
+	}
+
+	.container {
+
+		color: #000;
+	}
+
+
+
+	.comp {}
+
+	.check {
+
+		float: left;
+		margin-left: 18px;
+	}
+
+	.btn.btn-secondary.btn-circle.btn-sm {
+		/*position: relative;*/
+		width: 2px;
+		height: 2px;
+		/*padding: 6px 0px;*/
+		border-radius: 50%;
+		text-align: center;
+		/* margin-top: 3px;*/
+	}
+
+	.answered {
+		background: green;
+	}
+
+	.demo {
+
+		float: right;
+	}
+
+	.status_toggle {
+		color: green;
+
+	}
+
+	.check h5 {
+		position: absolute;
+	}
+
+	.detail {
+
+		float: right;
+		margin-right: 68%;
+	}
+
+	.vote:hover {
+
+		text-shadow: 2px 3px 6px grey;
+		cursor: pointer;
+		transform: translatey(-4px);
+		transition: all 0.2s ease;
+	}
+
+	.feedback:hover {
+
+		box-shadow: 2px 3px 6px grey;
+		cursor: pointer;
+		transform: translatey(-4px);
+		transition: all 0.3s ease;
+	}
+
+	.card.edit h1 {
+
+		color: grey;
+		font-size: 40px;
+		/*margin-left: 10%;*/
+		background-color: #666666;
+		font-weight: 1000;
+		-webkit-background-clip: text;
+		-moz-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		text-shadow: rgba(255, 255, 255, 0.5) 0px 3px 3px;
+	}
+
+	.dropdown-toggle::after {
+
+		display: none;
+	}
+
+	.nav-item:hover {
+
+		text-decoration: underline;
+
+
+	}
+
+	.dropdown-item:hover {
+
+		color: #000 !important;
+	}
+
+	.hvr-float-shadow {
+  display: inline-block;
+  /*border-radius: 0px 35px 0px 35px;*/
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+
+	.hvr-float-shadow:before {
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 5%;
+  height: 10px;
+  width: 90%;
+  opacity: 0;
+  background: -webkit-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform, opacity;
+  transition-property: transform, opacity;
+}
+.hvr-float-shadow:hover, .hvr-float-shadow:focus, .hvr-float-shadow:active {
+  -webkit-transform: translateY(-5px);
+  transform: translateY(-5px);
+}
+.hvr-float-shadow:hover:before, .hvr-float-shadow:focus:before, .hvr-float-shadow:active:before {
+  opacity: 1;
+  -webkit-transform: translateY(5px);
+  transform: translateY(5px);
+
+}
+	 </style>
+
+</head>
+
+<body>
+
+	<div class="card edit">
+		<div class="container">
+			<h1 style="margin-top:3%;">Login</h1>
+			<hr>
+			<div id="scroller">
+				<div class="scrollbar edit" id="style-7">
+					<div class="force-overflow edit">
+						<form  action="http://localhost:8080/home/" method="POST" class="form-horizontal" role="form" style="font-family: 'Alegreya', serif; font-weight: 100;">
+
+
+							<div class="col-md-9 personal-info">
+								<br>
+								<div class="form-group">
+										<label class="col-md-3 control-label">Username:</label>
+										<div class="col-md-8">
+											<input class="form-control" type="text" name="username" required>
+										</div>
+									</div>
+
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Password:</label>
+										<div class="col-md-8">
+											<input class="form-control" id="password" name="password" type="password" placeholder="**********" required>
+										</div>
+									</div>
+								<div class="form-group">
+
+										<div class="col-md-8">
+											<input class="form-control"  name="csrfmiddlewaretoken" value="{{token}}" type="hidden">
+										</div>
+									</div>
+
+								<div class="col-md-8">
+								<input type="submit"  class="btn btn-primary" value="Submit">
+							</div>
+								</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<!-- //integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous" -->
+</body>
+
+</html>

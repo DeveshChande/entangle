@@ -19,20 +19,41 @@ def setup_logger(name, log_file, level=logging.INFO):
 http_get_logger = setup_logger('http-log','http-log.log')
 
 class HTTPHandler(SimpleHTTPRequestHandler):
+	def _set_headers(self):
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.end_headers()
+
 	def do_GET(self):
-		http_get_logger.info(f'{self.client_address}')
-		if self.path == 'passwords.txt':
-			self.path='passwords.txt'
-			return SimpleHTTPRequestHandler.do_GET(self)
-		else:
-			self.path=='/'
-			return SimpleHTTPRequestHandler.do_GET(self)
+			print(self.client_address)
+			if self.path == '/passwords':
+				self.path = '/passwords.txt'
+				return SimpleHTTPRequestHandler.do_GET(self)
+			elif self.path == '/login':
+				self.path = '/login.html'
+				return SimpleHTTPRequestHandler.do_GET(self)
+
+			else:
+				self.path = '/index.html'
+				return SimpleHTTPRequestHandler.do_GET(self)
 
 
 
 
 	def do_POST(self):
-		pass
+		content_length = int(self.headers.get('Content-Length', 0))
+		config_string = self.rfile.read(content_length).decode("UTF-8")
+
+		print("Content length: ", content_length)
+		print("Config string: [ ", config_string, " ]")
+		if self.path == '/home/':
+			self.path = '/home.html'
+			return SimpleHTTPRequestHandler.do_GET(self)
+
+		print("Content length: ", content_length)
+		print("Config string: [ ", config_string, " ]")
+		self.path='/login.html'
+		return SimpleHTTPRequestHandler.do_GET(self)
 
 
 
