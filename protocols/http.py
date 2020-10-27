@@ -46,8 +46,8 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 
 		print("Content length: ", content_length)
 		print("Config string: [ ", config_string, " ]")
-		if self.path == '/home/':
-			self.path = '/home.html'
+		if self.path == '/login/':
+			self.path = '/login.html'
 			return SimpleHTTPRequestHandler.do_GET(self)
 
 		print("Content length: ", content_length)
