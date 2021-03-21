@@ -1,7 +1,7 @@
 from http.server import HTTPServer
 from http.server import BaseHTTPRequestHandler
 from http.server import SimpleHTTPRequestHandler
-import logging
+import logging, ssl
 
 def setup_logger(name, log_file, level=logging.INFO):
     """To setup the loggers"""
@@ -49,6 +49,7 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 
 
 def run(server_class=HTTPServer, handler_class=HTTPHandler):
-	server_address = ('127.0.0.1', 8080)
+	server_address = ('', 443)
 	httpd = server_class(server_address, handler_class)
+    httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='localhost.pem', ssl_version=ssl.PROTOCOL_TLS)
 	httpd.serve_forever()
