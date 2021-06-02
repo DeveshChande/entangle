@@ -62,7 +62,7 @@ class PublicKeyServer(paramiko.ServerInterface):
 class PasswordThreadedServer():
         def __init__(self):
                 self.host = 'localhost'
-                self.port = 22000
+                self.port = 22
                 self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 self.sock.bind((self.host, self.port))
