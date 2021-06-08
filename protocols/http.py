@@ -51,5 +51,5 @@ class HTTPHandler(SimpleHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=HTTPHandler):
 	server_address = ('', 443)
 	httpd = server_class(server_address, handler_class)
-	httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='/home/ubuntu/localhost.pem', ssl_version=ssl.PROTOCOL_TLS)
+	httpd.socket = ssl.wrap_socket(httpd.socket, server_side=True, certfile='/home/ubuntu/entangle/localhost.pem', ssl_version=ssl.PROTOCOL_TLS)
 	httpd.serve_forever()
